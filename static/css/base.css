@@ -13,12 +13,16 @@ body {
   color: #333;
 }
 
-html, body {
-  overflow-x: hidden; /* prevent page-level horizontal scroll */
+html,
+body {
+  overflow-x: hidden;
+  /* prevent page-level horizontal scroll */
 }
 
 /* Constrain page width to header/footer limit */
-body > header, .container, footer {
+body>header,
+.container,
+footer {
   max-width: var(--page-max);
   width: 100%;
   margin-left: auto;
@@ -32,28 +36,54 @@ header {
   align-items: center;
   padding: 1rem 2rem;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header .logo img {
   height: 40px;
 }
+/* img.panier {
+  width: 30px;
+  height: 30px;
+} */
 
-header nav ul {
+/* Panier */
+a.cart {
+  display: inline-block; /* Or flex, as you had it */
+  width: 40px;
+  height: 40px;
+  color: transparent;
+  
+  /* Background properties */
+  background-color: transparent !important;
+  background-image: url("../images/panier.png"); /* Double check this path */
+  background-size: contain;     /* Forces image to fit within 30x30 */
+  background-repeat: no-repeat; /* Prevents tiling */
+  background-position: center;  /* Centers the icon */
+
+  /* Remove any default link styling */
+  text-decoration: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* header nav ul
+ {
   list-style: none;
   display: flex;
   gap: 1rem;
   margin: 0;
   padding: 0;
-}
-
+} */
+/* 
 header nav a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
-}
+} */
 
-header .actions a {
+header .actions {
   text-decoration: none;
   color: #333;
   margin-left: 1rem;
@@ -75,23 +105,8 @@ header .actions .cart {
 
 main {
   flex: 1 1 auto;
-  min-width: 0; /* allow flexed main to shrink and prevent overflow */
-}
-
-/* Generic sidebar container (if used) */
-.sidebar {
-  flex: 0 0 var(--sidebar-w); /* fixed width sidebar */
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.sidebar h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  color: #333;
+  min-width: 0;
+  /* allow flexed main to shrink and prevent overflow */
 }
 
 /* Search + section headings */

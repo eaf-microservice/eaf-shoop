@@ -4,6 +4,23 @@
   gap: 1.5rem;
 } */
 
+/* Generic sidebar container (if used) */
+.sidebar {
+  flex: 0 0 var(--sidebar-w);
+  /* fixed width sidebar */
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
 .promotions-products-sidebar {
   display: grid;
   grid-template-columns: 1fr; /* Single column for sidebar */
@@ -23,4 +40,24 @@
   height: 100px;
   display: block;
   margin: 10px;
+}
+
+.separator {
+  height: 2px;
+  background-color: #444242;
+  margin: 15px 0;
+}
+
+.info-description {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  text-justify: auto;
+  text-align: justify
+}
+
+.info-text{
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
 }

@@ -1,7 +1,10 @@
-/* All Products section: vertical list with internal scroll
---------------------------------------------------------------*/
-
-.all-product-section .all-product-grid {
+.search-results-grid {
+  display: grid;
+  margin: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+.search-results-section .search-results-grid {
   display: grid;
   /* Define 3 equal columns */
   grid-template-columns: repeat(3, 1fr); 
@@ -17,13 +20,21 @@
 
 /* Optional: Mobile Responsiveness */
 @media (max-width: 768px) {
-  .all-product-section .all-product-grid {
+  .search-results-section .search-results-grid {
     grid-template-columns: repeat(2, 1fr); /* 2 items on tablets */
   }
 }
 
 @media (max-width: 480px) {
-  .all-product-section .all-product-grid {
+  .search-results-section .search-results-grid {
     grid-template-columns: 1fr; /* 1 item on phones */
   }
+}
+
+p.result-text {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  color: #ff0000;
+  font-weight: bold;
 }
