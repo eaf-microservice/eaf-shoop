@@ -42,6 +42,7 @@ header {
 header .logo img {
   height: 40px;
 }
+
 /* img.panier {
   width: 30px;
   height: 30px;
@@ -49,17 +50,22 @@ header .logo img {
 
 /* Panier */
 a.cart {
-  display: inline-block; /* Or flex, as you had it */
+  display: inline-block;
+  /* Or flex, as you had it */
   width: 40px;
   height: 40px;
   color: transparent;
-  
+
   /* Background properties */
   background-color: transparent !important;
-  background-image: url("../images/panier.png"); /* Double check this path */
-  background-size: contain;     /* Forces image to fit within 30x30 */
-  background-repeat: no-repeat; /* Prevents tiling */
-  background-position: center;  /* Centers the icon */
+  /* Double check this path */
+  background-image: url("../images/panier.png");
+  /* Forces image to fit within 30x30 */
+  background-size: contain;
+  /* Prevents tiling */
+  background-repeat: no-repeat;
+  /* Centers the icon */
+  background-position: center;
 
   /* Remove any default link styling */
   text-decoration: none;
@@ -149,4 +155,43 @@ footer {
   background-color: #333;
   color: #fff;
   width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  /* Sidebar moves to bottom */
+  aside.sidebar {
+    width: 100%;
+    order: 2;
+    /* Ensure it appears after main content */
+  }
+
+  main {
+    width: 100%;
+    order: 1;
+  }
+
+  /* Header adjustments */
+  header {
+    padding: 1rem;
+  }
+
+  header .logo {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Search section adjustments */
+  .search-section input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .search-section button {
+    width: 100%;
+  }
 }

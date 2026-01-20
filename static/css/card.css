@@ -8,7 +8,7 @@
 .product-grid {
   /* default grid helper if needed by pages */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.5rem;
 }
 
@@ -21,8 +21,9 @@
   padding: 1rem;
   text-align: center;
   transition: box-shadow 0.3s ease;
-  width: var(--card-w);
-  height: var(--card-h);
+  width: 100%;
+  height: auto;
+  min-height: var(--card-h);
   overflow: hidden;
   position: relative;
 }
