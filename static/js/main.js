@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <h3>${product.name}</h3>
                 <p class="price">${product.price} MAD</p>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus">-</button>
+                    <input type="number" class="quantity-input" value="1" min="1">
+                    <button class="quantity-btn plus">+</button>
+                </div>
                 <button class="add-to-cart">Ajouter au panier</button>
             </div>
         `;
@@ -36,6 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="original-price">${product.original_price} MAD</span>
                     ${product.price} MAD
                 </p>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus">-</button>
+                    <input type="number" class="quantity-input" value="1" min="1">
+                    <button class="quantity-btn plus">+</button>
+                </div>
                 <button class="add-to-cart">Ajouter au panier</button>
             </div>
         `;
@@ -61,6 +71,24 @@ document.addEventListener('DOMContentLoaded', () => {
             allProductsContainer.innerHTML += createProductCard(product);
         });
     }
+
+    // Event delegation for quantity buttons
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('quantity-btn')) {
+            const button = e.target;
+            const input = button.parentElement.querySelector('.quantity-input');
+            let value = parseInt(input.value);
+
+            if (button.classList.contains('plus')) {
+                value++;
+            } else if (button.classList.contains('minus')) {
+                if (value > 1) {
+                    value--;
+                }
+            }
+            input.value = value;
+        }
+    });
 
     const searchInput = document.getElementById('search-input');
     const searchButton = document.getElementById('search-button');
