@@ -3,8 +3,8 @@ const promoProductsDB = {
         {
             id: 'promo01',
             name: 'Engine Oil 5W-30',
-            price: '449.99',
-            original_price: '519.99',
+            price: '300.00',
+            original_price: '499.99',
             codeBar: '1234567890123',
             image: 'static/images/products/product1.avif',
             description: 'High-performance synthetic engine oil for all vehicles.',
@@ -13,8 +13,8 @@ const promoProductsDB = {
         {
             id: 'promo02',
             name: 'Brake Fluid DOT 4',
-            price: '450.00',
-            original_price: '550.00',
+            price: '350.00',
+            original_price: '549.99',
             codeBar: '9876543210987',
             image: 'static/images/products/product2.avif',
             description: 'High-performance synthetic engine oil for all vehicles.',
