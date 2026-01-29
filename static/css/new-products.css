@@ -10,7 +10,15 @@
   width: 100%;
   margin: 0;
   overscroll-behavior-x: contain;
-  scrollbar-gutter: stable both-edges;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+.new-product-section .new-product-grid::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
 }
 
 .new-product-section .product-card {
@@ -19,5 +27,7 @@
 }
 
 @media (max-width: 768px) {
-  .new-product-section .new-product-grid { gap: 1rem; }
+  .new-product-section .new-product-grid {
+    gap: 1rem;
+  }
 }

@@ -22,7 +22,11 @@ const CartService = {
     }
 
     this.saveCart(cart);
-    alert('Produit ajouté au panier !');
+    if (window.showMessage) {
+      window.showMessage('Produit ajouté au panier !');
+    } else {
+      alert('Produit ajouté au panier !');
+    }
   },
 
   removeFromCart(productId) {

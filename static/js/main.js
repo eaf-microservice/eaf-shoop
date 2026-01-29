@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Fallback: Extract product data from card (for backwards compatibility)
                 const name = card.querySelector('h3').innerText;
                 const priceText = card.querySelector('.price').innerText;
-                
+
                 let price;
                 if (card.classList.contains('promotion')) {
                     const priceEl = card.querySelector('.price');
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkoutBtn.addEventListener('click', () => {
             const cart = CartService.getCart();
             if (cart.length === 0) {
-                alert('Votre panier est vide.');
+                window.showMessage('Votre panier est vide.');
                 return;
             }
 
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const phone = document.getElementById('buyer-phone').value.trim();
 
             if (!name || !address || !phone) {
-                alert('Veuillez remplir toutes les informations de livraison (Nom, Adresse, Téléphone).');
+                window.showMessage('Veuillez remplir toutes les informations de livraison (Nom, Adresse, Téléphone).');
                 return;
             }
 
@@ -310,13 +310,128 @@ document.addEventListener('DOMContentLoaded', () => {
         searchButton.addEventListener('click', () => {
             const query = searchInput.value.trim(); // Use trim to handle whitespace only input
             if (query === '') {
-                alert('Aucun terme de recherche fourni.'); // Simple alert for error message
+                window.showMessage('Aucun terme de recherche fourni.');
                 return; // Do nothing further
             }
             sessionStorage.setItem('searchQuery', query.toLowerCase());
-            window.location.href = 'pages/search.html';
+            // Use path relative to current location to work correctly with GitHub Pages subdirectory
+            const currentPath = window.location.pathname;
+            // Remove filename (index.html) and trailing slash, keep base path
+            const basePath = currentPath.replace(/\/[^/]*$/, '').replace(/\/$/, '') || '';
+            const searchPath = basePath ? `${basePath}/pages/search.html` : 'pages/search.html';
+            window.location.href = searchPath;
         });
     }
+
+    // Initialize after a short delay to ensure rendering is complete
+    setTimeout(() => {
+        const container = document.querySelector('.new-product-grid');
+        if (container) {
+            initInfiniteAutoScroll(container);
+        }
+    }, 100);
+
+    // Generic Modal Logic (Global Scope)
+    window.showMessage = (message) => {
+        const messageModalOverlay = document.getElementById('message-modal-overlay');
+        const messageModalText = document.getElementById('message-modal-text');
+
+        if (messageModalText && messageModalOverlay) {
+            messageModalText.textContent = message;
+            messageModalOverlay.classList.add('open');
+        } else {
+            alert(message); // Fallback
+        }
+    };
+
+    window.closeMessageModal = () => {
+        const messageModalOverlay = document.getElementById('message-modal-overlay');
+        if (messageModalOverlay) {
+            messageModalOverlay.classList.remove('open');
+        }
+    };
+
+    // Event listeners for modal (attach when DOM is ready)
+    const closeMessageModalBtn = document.getElementById('close-message-modal');
+    const messageModalOkBtn = document.getElementById('message-modal-ok');
+    const messageModalOverlay = document.getElementById('message-modal-overlay');
+
+    if (closeMessageModalBtn) closeMessageModalBtn.addEventListener('click', window.closeMessageModal);
+    if (messageModalOkBtn) messageModalOkBtn.addEventListener('click', window.closeMessageModal);
+    if (messageModalOverlay) {
+        messageModalOverlay.addEventListener('click', (e) => {
+            if (e.target === messageModalOverlay) {
+                window.closeMessageModal();
+            }
+        });
+    }
+
+    // Infinite Auto-Scroll Logic for New Products
+    const initInfiniteAutoScroll = (container) => {
+        if (!container || container.children.length === 0) return;
+
+        // Clone items for infinite loop
+        const originalChildren = Array.from(container.children);
+
+        // We clone the entire set to ensure we have enough buffer
+        originalChildren.forEach(item => {
+            const clone = item.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true'); // Hide from screen readers to avoid duplication
+            container.appendChild(clone);
+        });
+
+        const getScrollStep = () => {
+            const card = container.querySelector('.product-card');
+            if (!card) return 0;
+            const style = window.getComputedStyle(container);
+            const gap = parseFloat(style.gap) || 0;
+            return card.offsetWidth + gap;
+        };
+
+        const scrollNext = () => {
+            // Check if we need to reset before scrolling
+            // If we are past the halfway point (end of original set), reset to start
+            if (container.scrollLeft >= (container.scrollWidth / 2)) {
+                container.scrollLeft -= (container.scrollWidth / 2);
+            }
+
+            const step = getScrollStep();
+            container.scrollBy({ left: step, behavior: 'smooth' });
+        };
+
+        // Scroll Reset Listener (for manual scrolling or drift)
+        container.addEventListener('scroll', () => {
+            // If we scroll past the cloned set, loop back silently
+            // Use a tolerance 
+            if (container.scrollLeft >= (container.scrollWidth / 2)) {
+                container.scrollLeft -= (container.scrollWidth / 2);
+            }
+            // Optional: If we scroll to the very beginning (leftwards loop), technically we could jump to end, 
+            // but 'new products' usually scrolls right. We'll stick to right-bound infinite scroll for simplicity.
+        });
+
+        // Auto-scroll interval
+        let scrollInterval = setInterval(scrollNext, 3000);
+
+        // Pause on interaction
+        container.addEventListener('mouseenter', () => clearInterval(scrollInterval));
+        container.addEventListener('touchstart', () => clearInterval(scrollInterval), { passive: true });
+
+        container.addEventListener('mouseleave', () => {
+            clearInterval(scrollInterval); // Safety
+            scrollInterval = setInterval(scrollNext, 3000);
+        });
+        container.addEventListener('touchend', () => {
+            clearInterval(scrollInterval);
+            scrollInterval = setInterval(scrollNext, 3000);
+        });
+    };
+
+    // Initialize after a short delay to ensure rendering is complete
+    setTimeout(() => {
+        initInfiniteAutoScroll(newProductsContainer);
+    }, 100);
+
 });
 
 // Update footer year

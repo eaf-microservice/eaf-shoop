@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="El Azbi Fouad">
-    <meta name="description" content="EAF Shoop - Plateforme de commerce électronique dédiée à la vente de Huile moteur Castrol EDGE Professional.">
-    <meta name="keywords" content="EAF Shoop, online shop, e-commerce, Castrol EDGE Professional, huile moteur, lubrifiants automobiles, achat en ligne, longlife 100, promotions">
+    <meta name="description"
+        content="EAF Shoop - Plateforme de commerce électronique dédiée à la vente de Huile moteur Castrol EDGE Professional.">
+    <meta name="keywords"
+        content="EAF Shoop, online shop, e-commerce, Castrol EDGE Professional, huile moteur, lubrifiants automobiles, achat en ligne, longlife 100, promotions">
     <meta name="copyright" content="EAF microservice">
     <meta name="language" content="fr">
 
@@ -46,7 +48,9 @@
             </section>
         </main>
         <aside class="sidebar">
-            <div class="row-title-promo"><img class="promo-img" src="static/images/promo.png" alt="promotions"><h2>Promotions</h2></div>
+            <div class="row-title-promo"><img class="promo-img" src="static/images/promo.png" alt="promotions">
+                <h2>Promotions</h2>
+            </div>
             <div id="promotions" class="promotions-products-sidebar"></div>
             <br>
             <div class="separator"></div>
@@ -59,14 +63,15 @@
                     avec un service client exceptionnel.
                 </p>
                 <p class="info-description">
-                    • Lubrifiants automobiles • Achat immédiat en ligne à prix avantageux huile moteur Castrol EDGE Professional LL-III 5W-30 chez EAF Shoop
-                     • Huile moteur 5W–30 à bas prix à commander chez EAF Shoop • Huile pour moteur de voiture •
+                    • Lubrifiants automobiles • Achat immédiat en ligne à prix avantageux huile moteur Castrol EDGE
+                    Professional LL-III 5W-30 chez EAF Shoop
+                    • Huile moteur 5W–30 à bas prix à commander chez EAF Shoop • Huile pour moteur de voiture •
                 </p>
                 <span class="info-text">Nous contacter:</span>
                 <p class="info-contact">
-                    <ul>Telephone: +212 645 994 904</ul>
-                    <ul>Email: EAF.Shoop@gmail.com</ul>
-                    <ul>Adresse: Rabat-Sale-Temara</ul>
+                <ul>Telephone: +212 645 994 904</ul>
+                <ul>Email: EAFShoop@gmail.com</ul>
+                <ul>Adresse: Rabat-Sale-Temara</ul>
                 </p>
             </div>
         </aside>
@@ -104,7 +109,22 @@
                     <span>Total:</span>
                     <span id="cart-total-price">0.00 MAD</span>
                 </div>
-                <button class="checkout-btn">Commander</button>
+                <button class="checkout-btn">Commander sur Whatsapp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Message Modal -->
+    <div class="modal-overlay" id="message-modal-overlay">
+        <div class="message-modal">
+            <div class="modal-header">
+                <h3>Information</h3>
+            </div>
+            <div class="modal-body">
+                <p id="message-modal-text"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="message-modal-ok">OK</button>
             </div>
         </div>
     </div>
@@ -125,6 +145,7 @@
     <script src="static/js/promotions.js"></script>
     <script src="static/js/search.js"></script>
     <script src="static/js/main.js"></script>
+
 </body>
 
 </html>

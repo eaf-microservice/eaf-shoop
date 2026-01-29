@@ -13,22 +13,12 @@ const promoProductsDB = {
         {
             id: 'promo02',
             name: 'Brake Fluid DOT 4',
-            price: '120.50',
-            original_price: '150.00',
+            price: '450.00',
+            original_price: '550.00',
             codeBar: '9876543210987',
             image: 'static/images/products/product2.avif',
             description: 'High-performance synthetic engine oil for all vehicles.',
             type: 'Fluid'
-        },
-        {
-            id: 'promo03',
-            name: 'Brake Fluid DOT 5',
-            price: '100.00',
-            original_price: '150.00',
-            codeBar: '9876543210237',
-            image: 'static/images/products/product3.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '5w10'
         }
     ]
 };

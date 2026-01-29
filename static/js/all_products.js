@@ -1,112 +1,31 @@
 const allProductsDB = {
     allProducts: [
         {
-            id: 'ap01',
-            name: 'Engine Oil 5W-30',
-            price: '45.99',
-            codeBar: '1234567890123',
-            image: 'static/images/products/product1.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
+            id: "01",
+            name: "Castrol EDGE 5W-30 LL",
+            price: "549.99",
+            codeBar: "",
+            image: "static/images/products/01.jpg",
+            description: "Castrol EDGE 5W-30 LL convient aux véhicules essence, diesel et hybride et est conçue pour répondre aux dernières spécificaitons des moteurs modernes lorsque le constructeur recommande un lubrifiant de grade SAE 5W-30 ACEA C3",
+            type: "5W-30 LL"
         },
         {
-            id: 'ap02',
-            name: 'Engine Oil 10W-40',
-            price: '42.50',
-            codeBar: '9876543210987',
-            image: 'static/images/products/product2.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
+            id: "02",
+            name: "Castrol EDGE 5W-40 A3/B4",
+            price: "499.99",
+            codeBar: "",
+            image: "static/images/products/02.jpg",
+            description: "Castrol EDGE 5W-40 A3/B4 convient aux véhicules essence et diesel et est conçue pour répondre aux dernières exigences des moteurs modernes lorsque le constructeur recommande un lubrifiant de grade SAE 5W-40 ACEA A3/B4, API SP ou antérieur.",
+            type: "5W-40 A3/B4"
         },
         {
-            id: 'ap03',
-            name: 'Brake Fluid DOT 4',
-            price: '15.00',
-            codeBar: '5678901234567',
-            image: 'static/images/products/product3.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
-        },
-        {
-            id: 'ap04',
-            name: 'Transmission Fluid',
-            price: '35.75',
-            codeBar: '2345678901234',
-            image: 'static/images/products/product1.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '5W40'
-        },
-        {
-            id: 'ap05',
-            name: 'Coolant/Antifreeze',
-            price: '25.00',
-            codeBar: '3456789012345',
-            image: 'static/images/products/product2.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '15W40'
-        },
-        {
-            id: 'ap06',
-            name: 'Power Steering Fluid',
-            price: '20.25',
-            codeBar: '4567890123456',
-            image: 'static/images/products/product3.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '20W50'
-        },
-        {
-            id: 'np07',
-            name: 'Synthetic Engine Oil 0W-20',
-            price: '55.99',
-            codeBar: '6789012345678',
-            image: 'static/images/products/product1.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
-        },
-        {
-            id: 'np08',
-            name: 'Advanced Fuel System Cleaner',
-            price: '22.00',
-            codeBar: '8901234567890',
-            image: 'static/images/products/product2.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
-        },
-        {
-            id: 'np09',
-            name: 'Advanced Fuel System Cleaner',
-            price: '22.00',
-            codeBar: '90123456789011',
-            image: 'static/images/products/product3.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
-        },
-        {
-            id: 'np07',
-            name: 'Synthetic Engine Oil 0W-20',
-            price: '55.99',
-            codeBar: '6789012345678',
-            image: 'static/images/products/product1.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
-        },
-        {
-            id: 'np08',
-            name: 'Advanced Fuel System Cleaner',
-            price: '22.00',
-            codeBar: '8901234567890',
-            image: 'static/images/products/product2.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
-        },
-        {
-            id: 'np09',
-            name: 'Advanced Fuel System Cleaner',
-            price: '22.00',
-            codeBar: '90123456789011',
-            image: 'static/images/products/product3.avif',
-            description: 'High-performance synthetic engine oil for all vehicles.',
-            type: '10W40'
+            id: "03",
+            name: " Castrol GTX 10W40 ",
+            price: "299.99",
+            codeBar: "",
+            image: "static/images/products/03.jpg",
+            description: "Castrol GTX 10W-40 A3/B4 est recommandée pour les moteurs essence et diesel lorsque le constructeur prescrit l’utilisation d’un lubrifiant de viscosité SAE 10W-40 répondant aux normes de performances ACEA A3/B3, A3/B4 ou API SL/CF.",
+            type: "GTX 10W40"
         }
     ]
 };
