@@ -94,11 +94,13 @@ const CartService = {
 
   // ── Update quantity ──────────────────────────────────────────
   updateQuantity(productId, quantity) {
-    const qty = parseInt(quantity, 10);
-    if (qty <= 0) { this.removeFromCart(productId); return; }
+    const qty = Math.max(1, parseInt(quantity, 10) || 1);
     const cart = this.getCart();
     const item = cart.find(i => i.id === productId);
-    if (item) { item.quantity = qty; this._saveCart(cart); }
+    if (item) {
+      item.quantity = qty;
+      this._saveCart(cart);
+    }
   },
 
   // ── Clear cart ───────────────────────────────────────────────
