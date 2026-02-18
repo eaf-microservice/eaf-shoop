@@ -1,18 +1,129 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page introuvable</title>
+    <meta name="description" content="Page introuvable — EAF Shoop">
+    <title>404 — Page introuvable | EAF Shoop</title>
     <link rel="icon" type="image/png" href="../static/images/logo.png">
     <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        .error-page {
+            min-height: calc(100vh - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0d0d0d 100%);
+        }
+
+        .error-content {
+            max-width: 500px;
+        }
+
+        .error-code {
+            font-size: clamp(6rem, 20vw, 10rem);
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, #e63946, #ffd60a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 10px rgba(230, 57, 70, 0.3));
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #f1f1f1;
+        }
+
+        .error-desc {
+            color: #9a9a9a;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
+
 <body>
-    <main class="error-body">
-        <img src="../static/images/404.jpg" alt="Error 404">
-        <h1>404 - Page introuvable</h1>
-        <p>Oups ! La page que vous recherchez a peut-être été supprimée, renommée ou est temporairement indisponible.</p>
-        <p>Veuillez vérifier l'URL pour vous assurer qu'il n'y a pas de fautes de frappe ou revenir à la <a href="/">page d'accueil</a>.</p>
+
+    <header>
+        <div class="header-inner">
+            <a href="../index.html" class="header-logo">
+                <img src="../static/images/logo.png" alt="EAF Shoop Logo">
+            </a>
+            <div class="header-actions" style="margin-left:auto">
+                <a href="#" class="cart-btn" id="cart-icon" aria-label="Mon panier">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="error-page">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Page introuvable</h1>
+            <p class="error-desc">
+                Oops ! La page que vous recherchez n'existe pas ou a été déplacée.<br>
+                Retournez à l'accueil pour continuer vos achats.
+            </p>
+            <div class="error-actions">
+                <a href="../index.html" class="btn btn-primary">🏠 Retour à l'accueil</a>
+                <a href="search.html" class="btn btn-outline">🔍 Rechercher</a>
+            </div>
+        </div>
     </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="../static/images/logo.png" alt="EAF Shoop">
+                <p>Votre partenaire de confiance pour une large gamme de produits de qualité : Technologie, Beauté,
+                    Automobile, Maison, Cuisine et Bureautique.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Catégories</h4>
+                <ul>
+                    <li><a href="category.html?cat=technology">Technologie</a></li>
+                    <li><a href="category.html?cat=beauty">Beauté</a></li>
+                    <li><a href="category.html?cat=automobile">Automobile</a></li>
+                    <li><a href="category.html?cat=maison">Maison</a></li>
+                    <li><a href="category.html?cat=cuisine">Cuisine</a></li>
+                    <li><a href="category.html?cat=bureautique">Bureautique</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>EAF Shoop &copy; <span id="current-year"></span> — Tous droits réservés</p>
+            <p>Conçu par <a href="https://eaf-microservice.netlify.app/" target="_blank" rel="noopener noreferrer">EAF
+                    microservice</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+
 </body>
+
 </html>

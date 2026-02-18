@@ -1,6 +1,5 @@
 /**
- * EAF-Shoop — Main Application Logic
- * Handles: category tabs, product rendering, sorting, cart modal, checkout, search, auto-scroll.
+ * EAF-Shoop — Category Page Logic
  */
 
 'use strict';
@@ -8,15 +7,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ── State ────────────────────────────────────────────────────
-    let activeCategory = 'all';
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get('cat') || 'all';
     let activeSortBy = 'default';
 
     // ── DOM refs ─────────────────────────────────────────────────
-    const allProductGrid = document.querySelector('.all-product-grid');
-    const newProductGrid = document.querySelector('.new-product-grid');
-    const categoryNavInner = document.querySelector('.category-nav-inner');
+    const productGrid = document.getElementById('category-product-grid');
+    const categoryName = document.getElementById('category-name');
+    const categoryDesc = document.getElementById('category-description');
+    const categoryIcon = document.getElementById('category-icon');
     const sortSelect = document.getElementById('sort-select');
-    const sectionTitle = document.getElementById('section-title');
+    const pageTitle = document.getElementById('page-title');
 
     const cartModalOverlay = document.getElementById('cart-modal-overlay');
     const cartIcon = document.getElementById('cart-icon');
@@ -36,10 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Helpers ──────────────────────────────────────────────────
 
-    /** Safely set text content (XSS-safe) */
-    const setText = (el, text) => { if (el) el.textContent = text; };
+    const esc = (str) => String(str ?? '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-    /** Build star rating HTML */
     const buildStars = (rating) => {
         let html = '<span class="stars">';
         for (let i = 1; i <= 5; i++) {
@@ -47,22 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (i - rating < 1) html += '<span class="star half">★</span>';
             else html += '<span class="star">★</span>';
         }
-        html += '</span>';
-        return html;
+        return html + '</span>';
     };
 
-    /** Build stock badge */
     const buildStockBadge = (stock) => {
         if (stock <= 0) return '<span class="badge-stock out-of-stock">Rupture</span>';
         if (stock <= 5) return `<span class="badge-stock low-stock">Stock limité (${stock})</span>`;
         return '<span class="badge-stock in-stock">En stock</span>';
     };
 
-    /** Calculate discount percentage */
     const discountPct = (orig, curr) => Math.round((1 - curr / orig) * 100);
-
-    /** Escape HTML for safe attribute insertion */
-    const esc = (str) => String(str ?? '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
     // ── Card Rendering ───────────────────────────────────────────
 
@@ -89,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
 
             <div class="product-image">
-                <img src="${esc(product.image)}" alt="${esc(product.name)}" loading="lazy">
+                <img src="../${esc(product.image)}" alt="${esc(product.name)}" loading="lazy">
                 ${buildStockBadge(product.stock)}
                 <div class="product-overlay">
                     <p class="product-description">${esc(product.description)}</p>
@@ -110,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="card-footer">
                 <div class="quantity-control">
                     <button class="quantity-btn minus" aria-label="Diminuer">−</button>
-                    <input type="number" class="quantity-input" value="1" min="1" max="99" aria-label="Quantité">
+                    <input type="number" class="quantity-input" value="1" min="1" max="99">
                     <button class="quantity-btn plus" aria-label="Augmenter">+</button>
                 </div>
                 <button class="add-to-cart" ${product.stock <= 0 ? 'disabled' : ''}>
@@ -120,61 +113,38 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>`;
     };
 
-    // ── Category Tabs ────────────────────────────────────────────
+    // ── Page Init & Rendering ────────────────────────────────────
 
-    const renderCategoryTabs = () => {
-        if (!categoryNavInner || !categoriesDB) return;
-        categoryNavInner.innerHTML = '';
-        categoriesDB.forEach(cat => {
-            const btn = document.createElement('button');
-            btn.className = 'cat-tab' + (cat.id === activeCategory ? ' active' : '');
-            btn.dataset.catId = cat.id;
-            btn.innerHTML = `<span class="cat-icon">${cat.icon}</span>${cat.name}`;
-            btn.addEventListener('click', () => {
-                activeCategory = cat.id;
-                renderCategoryTabs();
-                renderProducts();
-            });
-            categoryNavInner.appendChild(btn);
-        });
+    const initPage = () => {
+        const cat = categoriesDB.find(c => c.id === categoryId) || categoriesDB[0];
+
+        if (categoryName) categoryName.textContent = cat.name;
+        if (categoryDesc) categoryDesc.textContent = cat.description;
+        if (categoryIcon) categoryIcon.textContent = cat.icon;
+        if (pageTitle) pageTitle.textContent = `${cat.name} — EAF Shoop`;
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+        renderProducts();
+        CartService.updateCartCount();
     };
 
-    // ── Product Grid ─────────────────────────────────────────────
-
     const renderProducts = () => {
-        if (!allProductGrid) return;
+        if (!productGrid) return;
 
-        let products = getProductsByCategory(activeCategory);
+        let products = getProductsByCategory(categoryId);
         products = sortProducts(products, activeSortBy);
 
-        // Update section title
-        const cat = categoriesDB.find(c => c.id === activeCategory);
-        if (sectionTitle && cat) {
-            sectionTitle.textContent = cat.name;
-        }
-
         if (products.length === 0) {
-            allProductGrid.innerHTML = `
+            productGrid.innerHTML = `
                 <div class="empty-state" style="grid-column:1/-1">
                     <div class="empty-icon">🔍</div>
-                    <h3>Aucun produit trouvé</h3>
-                    <p>Essayez une autre catégorie.</p>
+                    <h3>Aucun produit dans cette catégorie</h3>
+                    <p>Revenez plus tard pour de nouveaux arrivages.</p>
                 </div>`;
             return;
         }
 
-        allProductGrid.innerHTML = products.map(createProductCard).join('');
-    };
-
-    // ── New Products Carousel ────────────────────────────────────
-
-    const renderNewProducts = () => {
-        if (!newProductGrid) return;
-        const newProds = getNewProducts();
-        newProductGrid.innerHTML = newProds.map(createProductCard).join('');
-        if (newProds.length > 0) {
-            setTimeout(() => initAutoScroll(newProductGrid), 150);
-        }
+        productGrid.innerHTML = products.map(createProductCard).join('');
     };
 
     // ── Sort ─────────────────────────────────────────────────────
@@ -186,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── Event Delegation (quantity + add-to-cart) ─────────────────
+    // ── Event Delegation ─────────────────────────────────────────
 
     document.addEventListener('click', (e) => {
         // Quantity buttons
@@ -214,18 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ── Cart Modal ───────────────────────────────────────────────
-
-    const openCart = () => {
-        renderCart();
-        cartModalOverlay?.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    };
-
-    const closeCart = () => {
-        cartModalOverlay?.classList.remove('open');
-        document.body.style.overflow = '';
-    };
+    // ── Cart Modal (shared logic) ────────────────────────────────
 
     const renderCart = () => {
         if (!cartItemsContainer || !cartTotalPrice) return;
@@ -242,15 +201,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.createElement('div');
             el.className = 'cart-item';
             el.innerHTML = `
-                <img src="${esc(item.image)}" alt="${esc(item.name)}">
+                <img src="../${esc(item.image)}" alt="${esc(item.name)}">
                 <div class="cart-item-details">
                     <h4>${esc(item.name)}</h4>
                     <div class="cart-item-price">${item.price.toFixed(2)} MAD</div>
                     <div class="cart-item-controls">
                         <div class="quantity-control">
                             <button class="quantity-btn minus small" data-id="${esc(item.id)}">−</button>
-                            <input type="number" class="quantity-input small" value="${item.quantity}"
-                                   readonly style="width:36px;padding:2px 4px;text-align:center">
+                            <input type="number" class="quantity-input small" value="${item.quantity}" readonly style="width:36px;padding:2px 4px;text-align:center">
                             <button class="quantity-btn plus small" data-id="${esc(item.id)}">+</button>
                         </div>
                         <button class="remove-item" data-id="${esc(item.id)}">Supprimer</button>
@@ -261,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cartTotalPrice.textContent = CartService.calculateTotal() + ' MAD';
 
-        // Remove buttons
         cartItemsContainer.querySelectorAll('.remove-item').forEach(btn => {
             btn.addEventListener('click', () => {
                 CartService.removeFromCart(btn.dataset.id);
@@ -269,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Quantity buttons inside cart
         cartItemsContainer.querySelectorAll('.quantity-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.dataset.id;
@@ -282,6 +238,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCart();
             });
         });
+    };
+
+    const openCart = () => {
+        renderCart();
+        cartModalOverlay?.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeCart = () => {
+        cartModalOverlay?.classList.remove('open');
+        document.body.style.overflow = '';
     };
 
     cartIcon?.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
@@ -307,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msg += `*Téléphone:* ${phone}\n\n`;
         msg += `*Commande:*\n`;
         cart.forEach(item => {
-            msg += `• ${item.quantity} × ${item.name} (Réf: ${item.codeBar || 'N/A'}) — ${(item.price * item.quantity).toFixed(2)} MAD\n`;
+            msg += `• ${item.quantity} × ${item.name} — ${(item.price * item.quantity).toFixed(2)} MAD\n`;
         });
         msg += `\n*Total: ${CartService.calculateTotal()} MAD*`;
 
@@ -315,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(url, '_blank', 'noopener,noreferrer');
     });
 
-    // ── Generic Message Modal ────────────────────────────────────
+    // ── Message Modal ────────────────────────────────────────────
 
     window.showMessage = (message) => {
         if (msgText && msgOverlay) {
@@ -326,71 +293,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    window.closeMessageModal = () => msgOverlay?.classList.remove('open');
-
-    msgOkBtn?.addEventListener('click', window.closeMessageModal);
-    msgOverlay?.addEventListener('click', (e) => { if (e.target === msgOverlay) window.closeMessageModal(); });
+    msgOkBtn?.addEventListener('click', () => msgOverlay?.classList.remove('open'));
 
     // ── Search ───────────────────────────────────────────────────
 
     const doSearch = () => {
-        const query = searchInput?.value.trim() || '';
-        if (!query) { window.showMessage('Veuillez entrer un terme de recherche.'); return; }
+        const query = searchInput?.value.trim();
+        if (!query) return;
         sessionStorage.setItem('searchQuery', query.toLowerCase());
-        const base = window.location.pathname.replace(/\/[^/]*$/, '').replace(/\/$/, '') || '';
-        window.location.href = base ? `${base}/pages/search.html` : 'pages/search.html';
+        window.location.href = 'search.html';
     };
 
     searchButton?.addEventListener('click', doSearch);
     searchInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(); });
 
-    // ── Infinite Auto-Scroll ─────────────────────────────────────
+    // ── Start ────────────────────────────────────────────────────
 
-    const initAutoScroll = (container) => {
-        if (!container || container.children.length === 0) return;
-
-        // Clone items for seamless loop
-        Array.from(container.children).forEach(child => {
-            const clone = child.cloneNode(true);
-            clone.setAttribute('aria-hidden', 'true');
-            container.appendChild(clone);
-        });
-
-        const getStep = () => {
-            const card = container.querySelector('.product-card');
-            if (!card) return 0;
-            const gap = parseFloat(getComputedStyle(container).gap) || 0;
-            return card.offsetWidth + gap;
-        };
-
-        const scrollNext = () => {
-            if (container.scrollLeft >= container.scrollWidth / 2) {
-                container.scrollLeft -= container.scrollWidth / 2;
-            }
-            container.scrollBy({ left: getStep(), behavior: 'smooth' });
-        };
-
-        container.addEventListener('scroll', () => {
-            if (container.scrollLeft >= container.scrollWidth / 2) {
-                container.scrollLeft -= container.scrollWidth / 2;
-            }
-        });
-
-        let interval = setInterval(scrollNext, 3000);
-        container.addEventListener('mouseenter', () => clearInterval(interval));
-        container.addEventListener('touchstart', () => clearInterval(interval), { passive: true });
-        container.addEventListener('mouseleave', () => { interval = setInterval(scrollNext, 3000); });
-        container.addEventListener('touchend', () => { interval = setInterval(scrollNext, 3000); });
-    };
-
-    // ── Footer year ──────────────────────────────────────────────
-
-    if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-
-    // ── Init ─────────────────────────────────────────────────────
-
-    renderCategoryTabs();
-    renderProducts();
-    renderNewProducts();
-    CartService.updateCartCount();
+    initPage();
 });

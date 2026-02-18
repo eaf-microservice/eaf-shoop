@@ -1,84 +1,158 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="El Azbi Fouad">
-
-    <title>EAF Shop - Search Results</title>
+    <meta name="description"
+        content="EAF Shoop — Résultats de recherche pour vos produits high-tech, beauté, auto et maison.">
+    <title>Recherche — EAF Shoop</title>
     <link rel="icon" type="image/png" href="../static/images/logo.png">
     <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/cart-modal.css">
 </head>
+
 <body>
+
+    <!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
     <header>
-        <div class="logo">
-           <a href="../index.html"> <img src="../static/images/logo.png" alt="EAF Shop Logo"></a>
-        </div>
-        <div class="actions">
-            <a href="#" class="cart" id="cart-icon">
-                <span class="cart-badge" id="cart-count">0</span>
+        <div class="header-inner">
+            <a href="../index.html" class="header-logo">
+                <img src="../static/images/logo.png" alt="EAF Shoop Logo">
             </a>
+            <div class="header-search">
+                <input type="text" id="live-search-input" placeholder="Rechercher un produit…" autocomplete="off">
+                <button id="live-search-btn" aria-label="Rechercher">🔍</button>
+            </div>
+            <div class="header-actions">
+                <a href="#" class="cart-btn" id="cart-icon" aria-label="Mon panier">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
+            </div>
         </div>
     </header>
-    <div class="container">
-        <main>
-            <section class="search-results-section">
-                <h2>Résultats de recherche pour «<span id="search-query"></span>»</h2>
-                <div class="search-results-grid"></div>
-            </section>
-        </main>
+
+    <!-- ═══════════════════════════ MAIN CONTENT ═════════════════════════════ -->
+    <div class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
+
+        <div class="section-header" style="margin-bottom: 1.5rem;">
+            <div>
+                <h1 class="section-title">
+                    Résultats pour «<span id="search-query" style="color:var(--clr-primary)"></span>»
+                </h1>
+                <p style="color:var(--clr-text-muted); font-size:var(--fs-sm); margin-top:0.25rem">
+                    <span id="result-count"></span>
+                </p>
+            </div>
+            <a href="../index.html" class="btn btn-outline">← Retour à l'accueil</a>
+        </div>
+
+        <div class="search-results-grid" id="search-results-grid">
+            <!-- Rendered by JS -->
+        </div>
+
     </div>
 
-    <!-- Cart Modal -->
-    <div class="cart-modal-overlay" id="cart-modal-overlay">
+    <!-- ═══════════════════════════ CART MODAL ════════════════════════════════ -->
+    <div class="cart-modal-overlay" id="cart-modal-overlay" role="dialog" aria-modal="true" aria-label="Panier">
         <div class="cart-modal">
             <div class="cart-header">
                 <h2>Mon Panier</h2>
-                <button class="close-cart" id="close-cart">&times;</button>
+                <button class="close-cart" id="close-cart" aria-label="Fermer">&times;</button>
             </div>
-            <div class="cart-body" id="cart-items">
-                <!-- Cart items will be injected here -->
-            </div>
-
+            <div class="cart-body" id="cart-items"></div>
             <div class="cart-form">
                 <h3>Informations de livraison</h3>
                 <div class="form-group">
                     <label for="buyer-name">Nom complet</label>
-                    <input type="text" id="buyer-name" placeholder="Votre nom">
+                    <input type="text" id="buyer-name" placeholder="Votre nom complet" autocomplete="name">
                 </div>
                 <div class="form-group">
                     <label for="buyer-address">Adresse</label>
-                    <input type="text" id="buyer-address" placeholder="Votre adresse">
+                    <input type="text" id="buyer-address" placeholder="Votre adresse" autocomplete="street-address">
                 </div>
                 <div class="form-group">
                     <label for="buyer-phone">Téléphone</label>
-                    <input type="tel" id="buyer-phone" placeholder="Votre numéro de téléphone">
+                    <input type="tel" id="buyer-phone" placeholder="Ex: 0612345678" autocomplete="tel">
                 </div>
             </div>
-
             <div class="cart-footer">
                 <div class="cart-total">
-                    <span>Total:</span>
+                    <span>Total :</span>
                     <span id="cart-total-price">0.00 MAD</span>
                 </div>
-                <button class="checkout-btn">Commander</button>
+                <button class="checkout-btn">Commander sur WhatsApp</button>
             </div>
         </div>
     </div>
 
+    <!-- ═══════════════════════════ MESSAGE MODAL ════════════════════════════ -->
+    <div class="modal-overlay" id="message-modal-overlay" role="dialog" aria-modal="true">
+        <div class="message-modal">
+            <div class="modal-header">
+                <h3>Information</h3>
+            </div>
+            <div class="modal-body">
+                <p id="message-modal-text"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm" id="message-modal-ok">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
     <footer>
-        <p>EAF Shop &copy; 2026 All rights reserved. 
-            - Designed by 
-            <a href="https://eaf-microservice.netlify.app/" target="_blank" rel="noopener noreferrer" style="color:aqua">
-                EAF microservice
-            </a>
-        </p>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="../static/images/logo.png" alt="EAF Shoop">
+                <p>Votre partenaire de confiance pour une large gamme de produits de qualité : Technologie, Beauté,
+                    Automobile, Maison, Cuisine et Bureautique.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Catégories</h4>
+                <ul>
+                    <li><a href="category.html?cat=technology">Technologie</a></li>
+                    <li><a href="category.html?cat=beauty">Beauté</a></li>
+                    <li><a href="category.html?cat=automobile">Automobile</a></li>
+                    <li><a href="category.html?cat=maison">Maison</a></li>
+                    <li><a href="category.html?cat=cuisine">Cuisine</a></li>
+                    <li><a href="category.html?cat=bureautique">Bureautique</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Aide & Contact</h4>
+                <ul>
+                    <li><a href="../index.html#contact">Nous contacter</a></li>
+                    <li><a href="../index.html#about">À propos</a></li>
+                    <li><a href="#">Conditions d'utilisation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>EAF Shoop &copy; <span id="current-year"></span> — Tous droits réservés</p>
+            <p>Conçu par <a href="https://eaf-microservice.netlify.app/" target="_blank" rel="noopener noreferrer">EAF
+                    microservice</a></p>
+        </div>
     </footer>
 
+    <!-- ═══════════════════════════════ SCRIPTS ══════════════════════════════ -->
+    <script src="../static/js/database.js"></script>
     <script src="../static/js/cart.js"></script>
-    <script src="../static/js/all_products.js"></script>
-    <script src="../static/js/main.js"></script>
     <script src="../static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yr = document.getElementById('current-year');
+            if (yr) yr.textContent = new Date().getFullYear();
+        });
+    </script>
+
 </body>
+
 </html>

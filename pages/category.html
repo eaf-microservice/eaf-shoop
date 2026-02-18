@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="El Azbi Fouad">
-    <meta name="description"
-        content="EAF Shoop — Votre destination shopping préférée pour la technologie, la beauté, l'automobile et la maison. Qualité professionnelle et livraison au Maroc.">
-    <meta name="keywords"
-        content="EAF Shoop, technologie, beauté, automobile, maison, cuisine, bureautique, shopping Maroc">
-    <meta name="copyright" content="EAF microservice">
-    <meta name="language" content="fr">
-    <title>EAF Shoop — Votre Boutique Tout-en-Un</title>
-    <link rel="icon" type="image/png" href="static/images/logo.png">
-    <link rel="stylesheet" href="static/css/style.css">
+    <meta id="meta-description" name="description"
+        content="EAF Shoop — Parcourez nos catégories : Technologie, Beauté, Automobile, Maison et plus.">
+    <title id="page-title">Catégorie — EAF Shoop</title>
+    <link rel="icon" type="image/png" href="../static/images/logo.png">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/category.css">
 </head>
 
 <body>
@@ -21,14 +18,13 @@
     <!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
     <header>
         <div class="header-inner">
-            <a href="index.html" class="header-logo">
-                <img src="static/images/logo.png" alt="EAF Shoop Logo">
+            <a href="../index.html" class="header-logo">
+                <img src="../static/images/logo.png" alt="EAF Shoop Logo">
             </a>
 
-            <!-- Desktop search -->
+            <!-- Search -->
             <div class="header-search">
-                <input type="text" id="search-input" placeholder="Rechercher un produit, une référence…"
-                    autocomplete="off">
+                <input type="text" id="search-input" placeholder="Rechercher un produit…" autocomplete="off">
                 <button id="search-button" aria-label="Rechercher">🔍</button>
             </div>
 
@@ -46,46 +42,18 @@
         </div>
     </header>
 
-    <!-- ═══════════════════════════ CATEGORY NAV ═════════════════════════════ -->
-    <nav class="category-nav" aria-label="Catégories">
-        <div class="category-nav-inner" id="category-nav-inner">
-            <!-- Rendered by JS -->
-        </div>
-    </nav>
-
-    <!-- ═══════════════════════════════ HERO ═════════════════════════════════ -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">⚡ Qualité Professionnelle</div>
-            <h1>Tout ce dont vous avez <span>besoin</span><br>au quotidien</h1>
-            <p>Découvrez notre large gamme de produits : Technologie, Beauté, Automobile, Maison, Cuisine et Bureautique
-                — Qualité professionnelle et prix compétitifs.</p>
-            <div class="hero-actions">
-                <a href="#products" class="btn btn-primary">Voir les produits</a>
-                <a href="pages/search.html" class="btn btn-outline">Rechercher</a>
-            </div>
-        </div>
-    </section>
-
     <!-- ═══════════════════════════ MAIN CONTENT ═════════════════════════════ -->
-    <div class="container">
+    <main class="container">
 
-
-
-        <!-- New Products Carousel -->
-        <section class="new-product-section" id="new-products">
-            <div class="section-header">
-                <h2 class="section-title">🆕 <span>Nouveautés</span></h2>
+        <section class="category-header">
+            <div class="category-info">
+                <div id="category-icon" class="category-icon-large">🛒</div>
+                <h1 id="category-name" class="section-title">Catégorie</h1>
+                <p id="category-description" class="category-desc">Découvrez nos produits.</p>
             </div>
-            <div class="new-product-grid" id="new-product-grid">
-                <!-- Rendered by JS -->
-            </div>
-        </section>
 
-        <!-- All Products Grid -->
-        <section class="products-section" id="products">
-            <div class="section-header">
-                <h2 class="section-title" id="section-title">Tous les produits</h2>
+            <div class="category-controls">
+                <a href="../index.html" class="btn btn-outline btn-sm">← Accueil</a>
                 <div class="sort-controls">
                     <span class="sort-label">Trier par :</span>
                     <select class="sort-select" id="sort-select" aria-label="Trier les produits">
@@ -97,12 +65,15 @@
                     </select>
                 </div>
             </div>
-            <div class="all-product-grid" id="all-product-grid">
+        </section>
+
+        <section class="products-grid-section">
+            <div class="all-product-grid" id="category-product-grid">
                 <!-- Rendered by JS -->
             </div>
         </section>
 
-    </div>
+    </main>
 
     <!-- ═══════════════════════════ CART MODAL ════════════════════════════════ -->
     <div class="cart-modal-overlay" id="cart-modal-overlay" role="dialog" aria-modal="true" aria-label="Panier">
@@ -116,16 +87,15 @@
                 <h3>Informations de livraison</h3>
                 <div class="form-group">
                     <label for="buyer-name">Nom complet</label>
-                    <input type="text" id="buyer-name" placeholder="Votre nom complet" autocomplete="name">
+                    <input type="text" id="buyer-name" placeholder="Votre nom complet">
                 </div>
                 <div class="form-group">
                     <label for="buyer-address">Adresse</label>
-                    <input type="text" id="buyer-address" placeholder="Votre adresse de livraison"
-                        autocomplete="street-address">
+                    <input type="text" id="buyer-address" placeholder="Votre adresse de livraison">
                 </div>
                 <div class="form-group">
                     <label for="buyer-phone">Téléphone</label>
-                    <input type="tel" id="buyer-phone" placeholder="Ex: 0612345678" autocomplete="tel">
+                    <input type="tel" id="buyer-phone" placeholder="Ex: 0612345678">
                 </div>
             </div>
             <div class="cart-footer">
@@ -157,47 +127,28 @@
     <footer>
         <div class="footer-inner">
             <div class="footer-brand">
-                <img src="static/images/logo.png" alt="EAF Shoop">
+                <img src="../static/images/logo.png" alt="EAF Shoop">
                 <p>Votre partenaire de confiance pour une large gamme de produits de qualité : Technologie, Beauté,
                     Automobile, Maison, Cuisine et Bureautique.</p>
             </div>
             <div class="footer-col">
                 <h4>Catégories</h4>
                 <ul>
-                    <li><a href="pages/category.html?cat=technology">Technologie</a></li>
-                    <li><a href="pages/category.html?cat=beauty">Beauté</a></li>
-                    <li><a href="pages/category.html?cat=automobile">Automobile</a></li>
-                    <li><a href="pages/category.html?cat=maison">Maison</a></li>
-                    <li><a href="pages/category.html?cat=cuisine">Cuisine</a></li>
-                    <li><a href="pages/category.html?cat=bureautique">Bureautique</a></li>
+                    <li><a href="category.html?cat=technology">Technologie</a></li>
+                    <li><a href="category.html?cat=beauty">Beauté</a></li>
+                    <li><a href="category.html?cat=automobile">Automobile</a></li>
+                    <li><a href="category.html?cat=maison">Maison</a></li>
+                    <li><a href="category.html?cat=cuisine">Cuisine</a></li>
+                    <li><a href="category.html?cat=bureautique">Bureautique</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Contact</h4>
-                <div class="footer-contact-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path
-                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.08 6.08l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-                    </svg>
-                    +212 645 994 904
-                </div>
-                <div class="footer-contact-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                    </svg>
-                    EAFShoop@gmail.com
-                </div>
-                <div class="footer-contact-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                        <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    Rabat-Salé-Témara, Maroc
-                </div>
+                <h4>Aide & Contact</h4>
+                <ul>
+                    <li><a href="../index.html#contact">Nous contacter</a></li>
+                    <li><a href="../index.html#about">À propos</a></li>
+                    <li><a href="#">Conditions d'utilisation</a></li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -208,11 +159,9 @@
     </footer>
 
     <!-- ═══════════════════════════════ SCRIPTS ══════════════════════════════ -->
-    <script src="static/js/database.js"></script>
-    <script src="static/js/cart.js"></script>
-    <script src="static/js/main.js"></script>
-
-
+    <script src="../static/js/database.js"></script>
+    <script src="../static/js/cart.js"></script>
+    <script src="../static/js/category.js"></script>
 
 </body>
 
