@@ -728,7 +728,8 @@ footer {
   }
 
   .header-search {
-    display: none;
+    display: flex;
+    max-width: none;
   }
 
   .hero {

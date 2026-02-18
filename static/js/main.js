@@ -335,14 +335,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const doSearch = () => {
         const query = searchInput?.value.trim() || '';
-        if (!query) { window.showMessage('Veuillez entrer un terme de recherche.'); return; }
+        if (!query) {
+            searchInput?.focus();
+            return;
+        }
         sessionStorage.setItem('searchQuery', query.toLowerCase());
-        const base = window.location.pathname.replace(/\/[^/]*$/, '').replace(/\/$/, '') || '';
+        const base = window.location.pathname.replace(/\/.[^\/]*$/, '').replace(/\/$/, '') || '';
         window.location.href = base ? `${base}/pages/search.html` : 'pages/search.html';
     };
 
     searchButton?.addEventListener('click', doSearch);
     searchInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(); });
+
+    // Hero Search Button
+    const heroSearchBtn = document.querySelector('.hero .btn-outline');
+    if (heroSearchBtn) {
+        heroSearchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            searchInput?.focus();
+            // Optional: scroll to top if needed
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
     // ── Infinite Auto-Scroll ─────────────────────────────────────
 
