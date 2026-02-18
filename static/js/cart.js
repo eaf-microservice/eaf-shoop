@@ -131,6 +131,7 @@ const CartService = {
     // Moroccan phone: 06/07/05 + 8 digits, or +212...
     const phoneClean = phone.replace(/\s+/g, '');
     const phoneRx = /^(\+212|00212|0)(5|6|7)\d{8}$/;
+    console.log(phoneClean, phoneRx.test(phoneClean));
     if (!phoneRx.test(phoneClean)) return 'Numéro de téléphone invalide (ex: 0612345678).';
     return null; // valid
   },
