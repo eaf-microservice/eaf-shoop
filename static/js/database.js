@@ -186,7 +186,7 @@ const productsDB = [
         name: 'Souris USB',
         brand: 'EAF Tech',
         category: 'technology',
-        price: 29.99,
+        price: 19.99,
         original_price: null,
         stock: 1,
         rating: 4.2,
@@ -285,7 +285,7 @@ const productsDB = [
         isPromo: true,
         codeBar: 'carte-satellite',
         image: 'static/images/products/technology/carte-satellite.png',
-        specs: ['Carte satellite', 'Carte externe','Digital satellite TV tuner', "HD", "DVB-S2"],
+        specs: ['Carte satellite', 'Carte externe', 'Digital satellite TV tuner', "HD", "DVB-S2"],
         description: "La carte satellite externe est un tuner TV numérique pour PC portable et Desktop pour regarder la télévision par satellite les chaines avec liberte.",
         type: 'Digital satellite TV tuner'
     },
@@ -455,7 +455,7 @@ const productsDB = [
         description: "Dos de moto Rymco piece originale",
         type: 'Dos de moto'
     },
-    
+
 
     // ── Maison ──
     {
